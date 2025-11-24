@@ -6,6 +6,118 @@
     ...Or you can use the import command to include 
     other sylesheets into your bunde as well, e.j:
     
-    import 'relative/path/to/stylesheet.scss';
+    import 'relative/path/to/stylesheet.scss';;
 
 */
+@import url('https://fonts.googleapis.com/css2?family=Thasadith:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3vh;
+  margin-block-end: -1vh;
+  padding-inline-end: -3vh;
+  font-size: 18vh;
+  color: #ddd;
+  font-family: "Thasadith", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.todo-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+}
+
+.delete-button {
+  background-color: #ffffff;
+  color: rgb(108, 108, 108);
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 30px;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin-left: 10px;
+}
+
+.todo-list li:hover .delete-button {
+  opacity: 1;
+
+}
+
+.todo-list li {
+  font-size: 25px;
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  list-style-type: none;
+  color: #000000a5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd76;
+  padding-left: 50px;
+}
+
+.numero-items {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.337);
+  border: 1px solid #dddddd76;
+  background: #fff;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.15),
+    0 10px 0 -5px #eee,
+    0 10px 1px -4px rgba(0, 0, 0, 0.15),
+    0 20px 0 -10px #eee,
+    0 20px 1px -9px rgba(0, 0, 0, 0.15);
+  padding: 13px;
+}
+
+.form-control {
+  font-size: 25px;
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd76;
+  padding-left: 50px;
+}
+
+.form-control:focus {
+  outline: none !important;
+  border: 1px solid #dddddd76;
+  box-shadow: none !important;
+}
+
+.todo-list {
+  padding-right: 300px !important;
+  padding-left: 300px !important;
+}
+
+.form-control {
+  border-radius: 0 !important;
+}
+
+.form-control[type="text"] {
+  color: #00000091;
+}
+
+.form-control::placeholder {
+  opacity: 0.3;
+}
