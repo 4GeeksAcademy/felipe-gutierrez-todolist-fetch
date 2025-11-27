@@ -116,6 +116,7 @@ export const Agenda = () => {
                     ))}
                 </ul>
                 <p className="numero-items">{todos.length} items left</p>
+                *BOTON PARA ELIMINAR TODAS LAS TAREAS*
                 <button className="btn btn-danger mt-3" onClick={borrarTareas}>
                     Borrar todas las tareas
                 </button>
