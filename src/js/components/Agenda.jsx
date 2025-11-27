@@ -76,7 +76,7 @@ export const Agenda = () => {
             })
             .catch((error) => console.error(error));
     }
-    const borrarTareas = () => {
+    const borrarTareas = () => {    
         fetch(API_URL + "/users/felipeg", {
             method: "DELETE"
         })
