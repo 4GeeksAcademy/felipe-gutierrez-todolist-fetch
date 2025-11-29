@@ -13,25 +13,38 @@ export const Agenda = () => {
 
 
     const crearUsuario = () => {
-        fetch(API_URL + "/users/felipeg", {
+        return fetch(API_URL + "/users/felipeg", {
             method: "POST",
             headers: { "Content-type": "application/json", }
         })
-            .then(response => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.log(error))
+            .then(response => {
+                if (!response.ok && response.status !== 400) {
+                    throw new Error("Error al crear usuario: " + response.statusText);
+                }
+                console.log("Usuario 'felipeg' creado.");
+            })
+            .catch((error) => console.error(error))
     }
 
     const traerLista = () => {
         fetch(API_URL + "/users/felipeg")
             .then(response => {
                 if (response.status === 404) {
-                    crearUsuario()
+                    return crearUsuario().then(() => fetch(API_URL + "/users/felipeg"));
                 }
-                return response.json()
+                if (!response.ok) {
+                    throw new Error("Error" + response.statusText);
+                }
+                return response;
             })
-            .then((data) => setTodos(data.todos))
-            .catch((error) => console.log(error))
+            .then(response => response.json())
+            .then((data) => {
+                setTodos(Array.isArray(data.todos) ? data.todos : []);
+            })
+            .catch((error) => {
+                console.error("Error", error);
+                setTodos([]); // 
+            })
     }
     useEffect(() => {
         traerLista()
@@ -69,26 +82,28 @@ export const Agenda = () => {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error al eliminar la tarea: ' + response.statusText);
+                    throw new Error('Error' + response.statusText);
                 }
                 const actualizarLista = todos.filter(taskItem => taskItem.id !== taskId);
                 setTodos(actualizarLista);
             })
             .catch((error) => console.error(error));
     }
-    const borrarTareas = () => {    
+    const borrarTareas = () => {
         fetch(API_URL + "/users/felipeg", {
             method: "DELETE"
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error al borrar todas las tareas/usuario: ' + response.statusText);
+                    throw new Error('Error' + response.statusText);
                 }
-                setTodos([]);
-                crearUsuario();
 
+                return crearUsuario();
             })
-            .catch((error) => console.error("Hubo un error al borrar todo:", error));
+            .then(() => {
+                setTodos([]);
+            })
+            .catch((error) => console.error("error", error));
     }
 
     return (
@@ -102,12 +117,12 @@ export const Agenda = () => {
 
                 <ul className="container">
 
-                    {todos.map((todos) => (
-                        <li key={todos.id}>
-                            <span>{todos.label}</span>
+                    {todos.map((todo) => (
+                        <li key={todo.id}>
+                            <span>{todo.label}</span>
                             <button
                                 className="delete-button"
-                                onClick={() => handleDeleteTask(todos.id)}
+                                onClick={() => handleDeleteTask(todo.id)}
                             >
                                 &times;
                             </button>
@@ -116,7 +131,7 @@ export const Agenda = () => {
                     ))}
                 </ul>
                 <p className="numero-items">{todos.length} items left</p>
-                *BOTON PARA ELIMINAR TODAS LAS TAREAS*
+
                 <button className="btn btn-danger mt-3" onClick={borrarTareas}>
                     Borrar todas las tareas
                 </button>
